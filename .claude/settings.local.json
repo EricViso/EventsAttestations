@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\")",
+      "Bash(npm init -y)",
+      "Bash(npm install next@latest react@latest react-dom@latest typescript @types/react @types/node ethers @ethereum-attestation-service/eas-sdk)",
+      "Bash(npm run build)",
+      "Bash(npm run dev)",
+      "Bash(tree -I node_modules -L 3)",
+      "Bash(taskkill:*)",
+      "Bash(findstr:*)",
+      "Bash(cat:*)",
+      "Bash(nul)",
+      "Bash(timeout /t 2 /nobreak)",
+      "Bash(if exist .nextdev rmdir /s /q .nextdev)",
+      "Bash(git --version:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
