@@ -130,7 +130,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Try the normal flow first
       newAttestationUID = await tx.wait();
       // If we get here, it worked! Get the hash from the now-populated receipt
-      txHash = tx.receipt?.hash || tx.receipt?.transactionHash || "unknown";
+      txHash = tx.receipt?.hash || "unknown";
       console.log("Attestation successful via tx.wait()!");
       console.log("UID:", newAttestationUID);
       console.log("TxHash:", txHash);
@@ -141,7 +141,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log("tx.receipt after wait():", tx.receipt ? "exists" : "null");
 
       if (tx.receipt) {
-        txHash = tx.receipt.hash || tx.receipt.transactionHash || tx.receipt.hash ||  "unknown";
+        txHash = tx.receipt.hash || "unknown";
         console.log("Extracted txHash from tx.receipt:", txHash);
         console.log("Receipt status:", tx.receipt.status);
         console.log("Receipt logs from EAS SDK:", tx.receipt.logs?.length);
