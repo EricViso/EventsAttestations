@@ -85,7 +85,7 @@ If you modify the schema, you must:
 
 ### ENS Resolution
 
-The app resolves ENS names to addresses using ethers.js `provider.resolveName()`. ENS resolution happens on Sepolia testnet. See [pages/api/attest.ts:43-52](pages/api/attest.ts#L43-L52).
+The app resolves ENS names to addresses using ethers.js `provider.resolveName()`. ENS resolution happens on Ethereum mainnet (since ENS doesn't exist on Base Sepolia). The app uses Cloudflare's public Ethereum RPC endpoint for ENS lookups. See [pages/api/attest.ts:44-57](pages/api/attest.ts#L44-L57).
 
 ### Wallet Connection
 

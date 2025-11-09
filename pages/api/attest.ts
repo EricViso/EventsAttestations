@@ -45,11 +45,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     async function resolveToAddress(input: string) {
       const trimmed = input.trim();
       if (isAddress(trimmed)) return trimmed;
-      // Try ENS resolution
+      // Try ENS resolution on Ethereum mainnet (ENS doesn't exist on Base)
       try {
-        const addr = await provider.resolveName(trimmed);
+        const ensProvider = new JsonRpcProvider("https://cloudflare-eth.com");
+        const addr = await ensProvider.resolveName(trimmed);
         if (addr && isAddress(addr)) return addr;
-      } catch {}
+      } catch (error) {
+        console.log("ENS resolution failed:", error);
+      }
       return null;
     }
 
