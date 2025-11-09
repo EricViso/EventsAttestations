@@ -36,10 +36,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Check network
     const network = await provider.getNetwork();
     console.log(`Connected to network: ${network.name} (Chain ID: ${network.chainId})`);
+    console.log(`Using EAS contract address: ${EAS_ADDRESS}`);
 
     // EAS connection
     const eas = new EAS(EAS_ADDRESS!);
     eas.connect(signer);
+    console.log(`EAS SDK connected to address: ${EAS_ADDRESS}`);
 
     // Helper function for address resolution
     async function resolveToAddress(input: string) {
@@ -47,7 +49,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (isAddress(trimmed)) return trimmed;
       // Try ENS resolution on Ethereum mainnet (ENS doesn't exist on Base)
       try {
-        const ensProvider = new JsonRpcProvider("https://cloudflare-eth.com");
+        // Using Ethereum mainnet RPC for ENS resolution
+        const ensProvider = new JsonRpcProvider("https://eth.llamarpc.com");
         const addr = await ensProvider.resolveName(trimmed);
         if (addr && isAddress(addr)) return addr;
       } catch (error) {
