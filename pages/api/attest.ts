@@ -11,7 +11,7 @@ const {
   EVENT_TITLE,
   EVENT_DATE_UNIX,
   EVENT_LOCATION,
-  EVENT_ORGANIZER,
+  EVENT_ORGANIZER
 } = process.env;
 
 if (!RPC_URL || !ORGANIZER_PRIVATE_KEY || !SCHEMA_UID || !EAS_ADDRESS) {
@@ -163,13 +163,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           newAttestationUID = "unknown";
         } else {
           // Parse the Attested event from logs to get the UID
+          // Event signature: Attested(address recipient, address attester, bytes32 uid, bytes32 schemaUID)
+          // topics[0] = event signature hash
+          // topics[1] = recipient (indexed)
+          // topics[2] = attester (indexed)
+          // topics[3] = uid (indexed)
           const attestedEvent = fullReceipt.logs?.find((log: any) =>
             log.topics[0] === '0x8bf46bf4cfd674fa735a3d63ec1c9ad4153f033c290341f3a588b75685141b35'
           );
 
           if (attestedEvent) {
-            newAttestationUID = attestedEvent.topics[2] || attestedEvent.topics[3] || "unknown";
+            // The UID is in topics[3] for the Attested event
+            newAttestationUID = attestedEvent.topics[3] || "unknown";
             console.log("Extracted UID from logs:", newAttestationUID);
+            console.log("All topics:", attestedEvent.topics);
           } else {
             console.log("No Attested event found, checking all logs...");
             console.log("All log topics:", fullReceipt.logs?.map((l: any) => l.topics[0]));

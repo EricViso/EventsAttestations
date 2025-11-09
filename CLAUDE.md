@@ -36,7 +36,7 @@ All configuration is stored in `.env.local` (never committed). Copy from `.env.e
 - `EAS_ADDRESS` - EAS contract address (default: Sepolia)
 
 **Event Variables:**
-- `EVENT_ID`, `EVENT_TITLE`, `EVENT_DATE_UNIX`, `EVENT_LOCATION`, `EVENT_ORGANIZER`, `EVENT_METHOD`
+- `EVENT_ID`, `EVENT_TITLE`, `EVENT_DATE_UNIX`, `EVENT_LOCATION`, `EVENT_ORGANIZER`
 
 These can be overridden via URL query parameters in the `/checkin` page.
 
@@ -68,18 +68,17 @@ User → /checkin page → POST /api/attest → EAS.attest() → On-chain attest
 The schema definition in [pages/api/attest.ts:31-40](pages/api/attest.ts#L31-L40) **must exactly match** the schema registered on EAS:
 
 ```typescript
-string eventId,
+string eventID,
 string eventTitle,
 uint64 date,
 string location,
 string organizer,
 address attester,
-string method,
 bool attended
 ```
 
 If you modify the schema, you must:
-1. Register the new schema on EAS (https://sepolia.easscan.org/schema/create)
+1. Register the new schema on EAS (https://base-sepolia.easscan.org/schema/create)
 2. Update `SCHEMA_UID` in `.env.local`
 3. Update `schemaString` in [pages/api/attest.ts](pages/api/attest.ts)
 4. Update the `encoder.encodeData()` call to match
