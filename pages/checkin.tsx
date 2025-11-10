@@ -101,7 +101,7 @@ export default function Checkin() {
           </p>
         )}
         <p style={{ color: "#666", marginBottom: "2rem" }}>
-          Connect your wallet or paste your ENS / 0x address to mint your attendance attestation on Sepolia.
+          Connect your wallet or paste your ENS / 0x address to mint your attendance attestation on Base.
         </p>
 
         <button
@@ -187,19 +187,19 @@ export default function Checkin() {
             {result.uid && result.uid !== 'undefined' && (
               <p style={{ marginBottom: "8px" }}>
                 <a
-                  href={`https://base-sepolia.easscan.org/attestation/view/${result.uid}`}
+                  href={`https://base.easscan.org/attestation/view/${result.uid}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: "#0070f3", textDecoration: "underline" }}
                 >
-                  View on EAS (Base Sepolia)
+                  View on EAS (Base Mainnet)
                 </a>
               </p>
             )}
             {result.txHash && result.txHash !== 'unknown' && (
               <p>
                 <a
-                  href={`https://sepolia.basescan.org/tx/${result.txHash}`}
+                  href={`https://basescan.org/tx/${result.txHash}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: "#0070f3", textDecoration: "underline" }}
